@@ -1,0 +1,115 @@
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->  
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{ productDetails.title }}</ion-title>
+    <ion-buttons end> 
+      <button ion-button><ion-icon name="share"></ion-icon></button>
+      <button (click)="openCart()" ion-button><ion-icon name="cart"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+      <!-- page autoplay="3000" pour le defilement automatique 
+    au delai de 3s entre transitions
+    loop="true" arrive au dernier slide, il se ramene automatiquement
+    au premier -->
+    <ion-slides pager autoplay="3000" loop="true">
+      <ion-slide *ngFor="let picture of productDetails.picture">
+        <img class="myImg" [src]="picture" #imagePic (click)="showImage(imagePic, $event)">
+      </ion-slide>
+    </ion-slides>
+    <ion-card-content>
+        <ion-card-title>
+          <ion-chip color="primary">
+            <ion-label>
+              {{ productDetails.category }}
+            </ion-label>
+          </ion-chip> 
+          <ion-chip *ngIf="productDetails.availability.available" color="secondary">
+            <ion-label>
+              Disponible
+            </ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="!productDetails.availability.available" color="danger">
+            <ion-label>
+              Non-disponible 
+            </ion-label>
+          </ion-chip>
+          <ion-chip color="blue">
+            <ion-label>
+              {{ productDetails.availability.type }}
+            </ion-label>
+          </ion-chip>
+          <ion-chip color="dark"> 
+            <ion-label color="light">
+              {{ productDetails.state }}
+            </ion-label>
+          </ion-chip>
+          <ion-chip color="primary">
+            <ion-label>
+              {{ productDetails.city }}
+            </ion-label>
+          </ion-chip>
+        </ion-card-title>
+        <p> prix : {{ productDetails.price | currency }}</p>
+        <p>
+          <span *ngIf="productDetailsaverageStar >=1">
+            <ion-icon class="iconYellow" name="star"></ion-icon>
+          </span>
+          <span *ngIf="productDetails.averageStar >=2">
+            <ion-icon class="iconYellow" name="star"></ion-icon>
+          </span>
+          <span *ngIf="productDetailsaverageStar >=3">
+            <ion-icon class="iconYellow" name="star"></ion-icon>
+          </span>
+          <span *ngIf="productDetails.averageStar >=4">
+            <ion-icon class="iconYellow" name="star"></ion-icon>
+          </span>
+          <span *ngIf="productDetails.averageStar >=5">
+            <ion-icon class="iconYellow" name="star"></ion-icon>
+          </span>
+        </p>
+        <p> {{ productDetails.description }}</p>
+        <ion-grid>
+          <ion-row padding>
+            <!-- Read-only a false parce qu'on a pas seulement besoin de 
+            lire mais aussi de modifier les etoiles -->
+            <ion-col col-9>
+              <ionic3-star-rating #rating
+                activeIcon = "ios-star"
+                defaultIcon = "ios-star-outline"
+                activeColor = "#f4e242 " 
+                defaultColor = "#f4f4f4"
+                readonly="false" 
+                rating="3">
+              </ionic3-star-rating>
+            </ion-col>
+            <ion-col col-2> 
+              <button ion-button padding small round color="secondary">Noter</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 
+
+<ion-footer>
+  <ion-row>
+    <!-- Largeur de la colonne  10 et largeur 1 -->
+    <ion-col offset-1 col-10>
+      <button (click)="addToCart(productDetails)" ion-button round large>
+        <ion-icon name="cart"></ion-icon>&nbsp; 
+        Ajouter Au Panier
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
